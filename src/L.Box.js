@@ -25,35 +25,35 @@ L.Box = L.Polygon.extend({
 
     setCenter: function(center) {
         this._center = L.latLng(center)
-        return this
+        return this.redraw()
     },
 
     getWidth: function() { return this._width },
 
     setWidth: function (width = 100) {
         this._width = Math.abs(width)
-        return this
+        return this.redraw()
     },
 
     getLength: function() { return this._length },
 
     setLength: function (length = 100) {
         this._length = Math.abs(length)
-        return this
+        return this.redraw()
     },
 
     getBearing: function() { return this._bearing },
 
     setBearing: function (bearing = 0) {
         this._bearing = bearing % 360
-        return this
+        return this.redraw()
     },
 
     getOptions: function () { return this.options },
 
     setOptions: function (options = {}) {
         L.setOptions(this, options)
-        return this
+        return this.redraw()
     },
 
     getLatLngs() {
@@ -82,7 +82,12 @@ L.Box = L.Polygon.extend({
             this.getBearing() - Math.atan2(-this.getWidth(), this.getLength()) * 180 / Math.PI
         ))
 
-        return [latLngs, []]
+        return [latLngs]
+    },
+
+    setLatLngs: function(latLngs) {
+        this._setLatLngs(this.getLatLngs())
+        return this.redraw()
     },
 
     getMaxMin(values) {
@@ -124,6 +129,17 @@ L.Box = L.Polygon.extend({
 
     },
 
+    _update: function () {
+		if (!this._map) { return; }
+
+		this._clipPoints();
+		this._simplifyPoints();
+		this._updatePath();
+    },
+
+    _updatePath: function () {
+        this._renderer._updatePoly(this, true)
+    },
 })
 
 L.box = ({

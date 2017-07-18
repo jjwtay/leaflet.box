@@ -65,7 +65,7 @@ L.Box = L.Polygon.extend({
 
     setCenter: function setCenter(center) {
         this._center = L.latLng(center);
-        return this;
+        return this.redraw();
     },
 
     getWidth: function getWidth() {
@@ -76,7 +76,7 @@ L.Box = L.Polygon.extend({
         var width = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
 
         this._width = Math.abs(width);
-        return this;
+        return this.redraw();
     },
 
     getLength: function getLength() {
@@ -87,7 +87,7 @@ L.Box = L.Polygon.extend({
         var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
 
         this._length = Math.abs(length);
-        return this;
+        return this.redraw();
     },
 
     getBearing: function getBearing() {
@@ -98,7 +98,7 @@ L.Box = L.Polygon.extend({
         var bearing = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
         this._bearing = bearing % 360;
-        return this;
+        return this.redraw();
     },
 
     getOptions: function getOptions() {
@@ -109,7 +109,7 @@ L.Box = L.Polygon.extend({
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         L.setOptions(this, options);
-        return this;
+        return this.redraw();
     },
 
     getLatLngs: function getLatLngs() {
@@ -122,8 +122,15 @@ L.Box = L.Polygon.extend({
         latLngs.push(this.computeDestinationPoint(this.getCenter(), hypotenuse, this.getBearing() - Math.atan2(-this.getWidth(), -this.getLength()) * 180 / Math.PI));
         latLngs.push(this.computeDestinationPoint(this.getCenter(), hypotenuse, this.getBearing() - Math.atan2(-this.getWidth(), this.getLength()) * 180 / Math.PI));
 
-        return [latLngs, []];
+        return [latLngs];
     },
+
+
+    setLatLngs: function setLatLngs(latLngs) {
+        this._setLatLngs(this.getLatLngs());
+        return this.redraw();
+    },
+
     getMaxMin: function getMaxMin(values) {
         return values.reduce(function (acc, val) {
             var newAcc = _extends({}, acc);
@@ -159,8 +166,21 @@ L.Box = L.Polygon.extend({
             lat: lat2,
             lng: lon2
         };
-    }
+    },
 
+    _update: function _update() {
+        if (!this._map) {
+            return;
+        }
+
+        this._clipPoints();
+        this._simplifyPoints();
+        this._updatePath();
+    },
+
+    _updatePath: function _updatePath() {
+        this._renderer._updatePoly(this, true);
+    }
 });
 
 L.box = function (_ref2) {
