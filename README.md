@@ -19,6 +19,11 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
     * bearing - bearing in degrees (optional - 0)
     * any leaflet options (e.g. fill, color, fillColor, ....)
 
+## Also checkout
+
+    * [leaflet.draw-box](https://github.com/jjwtay/Leaflet.draw-box) - Leaflet Draw support for L.Box
+
+
 ## License
 
 This code is provided under the Apache 2.0 license.
