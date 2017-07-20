@@ -21,7 +21,15 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
 
 ## Also checkout
 
-[leaflet.draw-box](https://github.com/jjwtay/Leaflet.draw-box) - Leaflet Draw support for L.Box
+[leaflet.draw-box](https://github.com/jjwtay/Leaflet.draw-box) - Leaflet Draw support for leaflet.box.
+
+[leaflet.arc](https://github.com/jjwtay/leaflet.arc) - Leaflet Arc drawing.
+
+[leaflet.draw-arc](https://github.com/jjwtay/leaflet.draw-arc) - Leaflet Draw support for leaflet.arc.
+
+[leaflet.sector](https://github.com/jjwtay/leaflet.sector) - Leaflet Sector drawing.
+
+[leaflet.draw-sector](https://github.com/jjwtay/leaflet.draw-sector) - Leaflet Draw support for leaflet.sector.
 
 
 ## License
