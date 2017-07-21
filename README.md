@@ -9,7 +9,8 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
               <LatLng> center,
               <Number> width,
               <Number> length,
-              <Number> bearing
+              <Number> bearing,
+              <Boolean> rhumb,
               <...Leaflet Polygon Options>
     })
 
@@ -17,6 +18,7 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
     * width - width in meters (optional - 100)
     * length - length in meters (optional - 1000)
     * bearing - bearing in degrees (optional - 0)
+    * rhumb - use rhumb instead of greater circle (optional - false)
     * any leaflet options (e.g. fill, color, fillColor, ....)
 
 ## Checkout
