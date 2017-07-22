@@ -5,8 +5,11 @@
     },
     "extends": "eslint:recommended",
     "parserOptions": {
+        "ecmaVersion": 6,
         "sourceType": "module",
-        "experimentalObjectRestSpread": true
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true  
+        }
     },
     "rules": {
         "indent": [
