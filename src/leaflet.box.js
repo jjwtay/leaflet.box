@@ -87,18 +87,18 @@ L.Box = L.Polygon.extend({
         return [latLngs]
     },
 
-    setLatLngs: function(latLngs) {
-        this._setLatLngs(this.getLatLngs())
+    setLatLngs: function(latLngs = this.getLatLngs()) {
+        this._setLatLngs(latLngs)
         return this.redraw()
     },
 
     getMaxMin(values) {
         return values.reduce((acc, val) => {
-                                let newAcc = {...acc}
-                                if (val < newAcc.min) newAcc.min = val
-                                if (val > newAcc.max) newAcc.max = val
-                                return newAcc
-                            }, {min: 0, max: 0})
+            let newAcc = {...acc}
+            if (val < newAcc.min) newAcc.min = val
+            if (val > newAcc.max) newAcc.max = val
+            return newAcc
+        }, {min: 0, max: 0})
     },
 
     setStyle: L.Path.prototype.setStyle,
@@ -118,29 +118,24 @@ L.Box = L.Polygon.extend({
         rhumb = this.getRhumb()
     ) {
         if (rhumb) {
-            let d = distance,
-                θ = bearing * Math.PI / 180,
-                φ = start.lat * Math.PI / 180,
-                λ = start.lng * Math.PI / 180,
-                R = radius
             /*http://www.movable-type.co.uk/scripts/latlong.html*/
 
-            var δ = Number(distance) / radius; // angular distance in radians
+            var δ = Number(distance) / radius // angular distance in radians
             var φ1 = start.lat * Math.PI / 180
             var λ1 = start.lng * Math.PI / 180
             var θ = bearing * Math.PI / 180
 
-            var Δφ = δ * Math.cos(θ);
-            var φ2 = φ1 + Δφ;
+            var Δφ = δ * Math.cos(θ)
+            var φ2 = φ1 + Δφ
 
             // check for some daft bugger going past the pole, normalise latitude if so
-            if (Math.abs(φ2) > Math.PI/2) φ2 = φ2>0 ? Math.PI-φ2 : -Math.PI-φ2;
+            if (Math.abs(φ2) > Math.PI/2) φ2 = φ2>0 ? Math.PI-φ2 : -Math.PI-φ2
 
-            var Δψ = Math.log(Math.tan(φ2/2+Math.PI/4)/Math.tan(φ1/2+Math.PI/4));
-            var q = Math.abs(Δψ) > 10e-12 ? Δφ / Δψ : Math.cos(φ1); // E-W course becomes ill-conditioned with 0/0
+            var Δψ = Math.log(Math.tan(φ2/2+Math.PI/4)/Math.tan(φ1/2+Math.PI/4))
+            var q = Math.abs(Δψ) > 10e-12 ? Δφ / Δψ : Math.cos(φ1) // E-W course becomes ill-conditioned with 0/0
 
-            var Δλ = δ*Math.sin(θ)/q;
-            var λ2 = λ1 + Δλ;
+            var Δλ = δ*Math.sin(θ)/q
+            var λ2 = λ1 + Δλ
 
             //return new LatLon(φ2.toDegrees(), (λ2.toDegrees()+540) % 360 - 180); // normalise to −180..+180°
             return {
@@ -157,7 +152,7 @@ L.Box = L.Polygon.extend({
             Math.cos(lat1)*Math.sin(distance/radius)*Math.cos(bng))
 
         var lon2 = lon1 + Math.atan2(Math.sin(bng)*Math.sin(distance/radius)*Math.cos(lat1),
-                    Math.cos(distance/radius)-Math.sin(lat1)*Math.sin(lat2))
+            Math.cos(distance/radius)-Math.sin(lat1)*Math.sin(lat2))
                     
         lat2 = lat2 * 180 / Math.PI
         lon2 = lon2 * 180 / Math.PI
@@ -170,11 +165,11 @@ L.Box = L.Polygon.extend({
     },
 
     _update: function () {
-		if (!this._map) { return; }
+        if (!this._map) { return }
 
-		this._clipPoints();
-		this._simplifyPoints();
-		this._updatePath();
+        this._clipPoints()
+        this._simplifyPoints()
+        this._updatePath()
     },
 
     _updatePath: function () {
