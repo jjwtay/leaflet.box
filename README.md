@@ -1,6 +1,25 @@
 # leaflet.box
 Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://github.com/jdfergason/Leaflet.Ellipse). Check out the [Demo](https://jjwtay.github.io/leaflet.box/)
 
+## How to
+
+*Traditional*
+
+    Include leaflet.box.js in your html
+
+    <script src='/path/to/leaflet.box'></script>
+
+*Webpack as non es6 module*
+
+    import './path/to/leaflet.box'
+
+    * If using es6 with object spread you can opt to use the uncompiled src/leaflet.box.js
+
+*ES6 module*
+
+    TODO
+
+
 ## API
 
 *Factory method*
