@@ -145,7 +145,7 @@
                 width: e.layer.getWidth(),
                 length: e.layer.getLength(),
                 color: 'rgb(0, 255, 255)'
-            })
+            }).on('dblclick', e => toggle(e, newBox))
 
             newRect.editing.enable()
 
