@@ -70,7 +70,6 @@ L.Draw.Box = L.Draw.SimpleShape.extend({
 
         L.Draw.SimpleShape.prototype.initialize.call(this, map, options);
     },
-
     _drawShape: function _drawShape(latlng) {
         var width = void 0,
             length = void 0,
@@ -98,7 +97,6 @@ L.Draw.Box = L.Draw.SimpleShape.extend({
             this._shape.setLatLngs(this._shape.getLatLngs());
         }
     },
-
     _fireCreatedEvent: function _fireCreatedEvent() {
         var box = L.box(_extends({}, this.options.shapeOptions, {
             center: this._startLatLng,
@@ -109,11 +107,11 @@ L.Draw.Box = L.Draw.SimpleShape.extend({
 
         L.Draw.SimpleShape.prototype._fireCreatedEvent.call(this, box);
     },
-
     _onMouseMove: function _onMouseMove(e) {
         var latlng = e.latlng,
-            showRadius = this.options.showRadius,
-            radius = void 0;
+            showRadius = this.options.showRadius;
+
+        var radius = void 0;
 
         this._tooltip.updatePosition(latlng);
         if (this._isDrawing) {
@@ -126,6 +124,21 @@ L.Draw.Box = L.Draw.SimpleShape.extend({
                 subtext: showRadius ? L.drawLocal.draw.handlers.box.radius + ': ' + radius : ''
             });
         }
+    }
+});
+
+L.Draw.Rect = L.Draw.Box.extend({
+    statics: {
+        TYPE: 'rect'
+    },
+    _fireCreatedEvent: function _fireCreatedEvent() {
+        var box = L.rect(_extends({}, this.options.shapeOptions, {
+            center: this._startLatLng,
+            width: this._shape.getWidth(),
+            length: this._shape.getLength()
+        }));
+
+        L.Draw.SimpleShape.prototype._fireCreatedEvent.call(this, box);
     }
 });
 
