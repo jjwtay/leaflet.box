@@ -195,7 +195,7 @@
         }
         let box0 = L.box({
             center: [-37.7772, 175.2556],
-            width: 500,
+            width: 750,
             length: 500,
             bearing: -45,
             color: 'hotpink',
@@ -204,7 +204,7 @@
 
         let box1 = L.box({
             center: [-37.7772, 175.2756],
-            width: 500,
+            width: 750,
             length: 500,
             bearing: 0,
             color: 'blue'
@@ -212,7 +212,7 @@
 
         let box2 = L.box({
             center: [-37.7772, 175.2656],
-            width: 500,
+            width: 750,
             length: 500,
             bearing: 45,
             color: 'red',
@@ -221,7 +221,7 @@
 
         let box3 = L.rect({
             center: [-37.7772, 175.2856],
-            width: 500,
+            width: 750,
             length: 500,
             bearing: 45,
             color: 'green'    
@@ -229,12 +229,12 @@
 
         let box4 = L.rect({
             center: [-37.7772, 175.2956],
-            width: 1000,
+            width: 750,
             length: 500,
             bearing: 65,
             wideable: false,
             color: 'purple'
-        })
+        }).on('dblclick', e => toggle(e, box4))
 
         /*let box4 = L.rect({
             center: [-37.7772, 175.2756],
