@@ -30,7 +30,15 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
               <Number> length,
               <Number> bearing,
               <Boolean> rhumb,
+              <Boolean> rotatable,
+              <Boolean> moveable,
+              <Boolean> wideable,
+              <Boolean> lengthable,
               <...Leaflet Polygon Options>
+    })
+
+    L.rect({
+        ...same as above except bearing = 0 and rotatable = false
     })
 
     * center - Leaflet latlng (optional - [0,0])
@@ -38,6 +46,10 @@ Leaflet Rectangle with Bearing support. Inspired by [leaflet.ellipse](https://gi
     * length - length in meters (optional - 1000)
     * bearing - bearing in degrees (optional - 0)
     * rhumb - use rhumb instead of greater circle (optional - false)
+    * rotatable - disable/enable rotate marker (optional - true)
+    * moveable - disable/enable center drag marker (optional - true)
+    * wideable - disable/enable allowing corners to widen rectangle (optional - true)
+    * lengthable -disable/enable allowing corners to lengthen rectangle (optional - true)
     * any leaflet options (e.g. fill, color, fillColor, ....)
 
 ## Checkout

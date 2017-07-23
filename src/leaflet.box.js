@@ -11,6 +11,10 @@ L.Box = L.Polygon.extend({
         length = 1000,
         bearing = 0,
         rhumb = false,
+        rotatable = true,
+        moveable = true,
+        wideable = true,
+        lengthable = true,
         ...options
     }) {
         this.setOptions(options)
@@ -19,6 +23,11 @@ L.Box = L.Polygon.extend({
             .setLength(length)
             .setBearing(bearing)
             .setRhumb(rhumb)
+
+        this.rotatable = rotatable
+        this.moveable = moveable
+        this.wideable = wideable
+        this.lengthable = lengthable
 
         this._setLatLngs(this.getLatLngs())
     },
@@ -183,8 +192,15 @@ L.box = ({
     length = 100,
     bearing = 0,
     rhumb = false,
+    rotatable = true,
+    moveable = true,
+    wideable = true,
+    lengthable = true,
     ...options
 }) =>
-    new L.Box({center, width, rhumb, length, bearing, ...options})
+    new L.Box({center, width, rhumb, length, bearing, rotatable, moveable, wideable, lengthable, ...options})
 
-
+L.rect = ({
+    ...options
+}) =>
+    new L.Box({...options, bearing: 0, rotatable: false})

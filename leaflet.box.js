@@ -54,9 +54,22 @@ L.Box = L.Polygon.extend({
             bearing = _ref$bearing === undefined ? 0 : _ref$bearing,
             _ref$rhumb = _ref.rhumb,
             rhumb = _ref$rhumb === undefined ? false : _ref$rhumb,
-            options = objectWithoutProperties(_ref, ['center', 'width', 'length', 'bearing', 'rhumb']);
+            _ref$rotatable = _ref.rotatable,
+            rotatable = _ref$rotatable === undefined ? true : _ref$rotatable,
+            _ref$moveable = _ref.moveable,
+            moveable = _ref$moveable === undefined ? true : _ref$moveable,
+            _ref$wideable = _ref.wideable,
+            wideable = _ref$wideable === undefined ? true : _ref$wideable,
+            _ref$lengthable = _ref.lengthable,
+            lengthable = _ref$lengthable === undefined ? true : _ref$lengthable,
+            options = objectWithoutProperties(_ref, ['center', 'width', 'length', 'bearing', 'rhumb', 'rotatable', 'moveable', 'wideable', 'lengthable']);
 
         this.setOptions(options).setCenter(center).setWidth(width).setLength(length).setBearing(bearing).setRhumb(rhumb);
+
+        this.rotatable = rotatable;
+        this.moveable = moveable;
+        this.wideable = wideable;
+        this.lengthable = lengthable;
 
         this._setLatLngs(this.getLatLngs());
     },
@@ -217,6 +230,19 @@ L.box = function (_ref2) {
         bearing = _ref2$bearing === undefined ? 0 : _ref2$bearing,
         _ref2$rhumb = _ref2.rhumb,
         rhumb = _ref2$rhumb === undefined ? false : _ref2$rhumb,
-        options = objectWithoutProperties(_ref2, ['center', 'width', 'length', 'bearing', 'rhumb']);
-    return new L.Box(_extends({ center: center, width: width, rhumb: rhumb, length: length, bearing: bearing }, options));
+        _ref2$rotatable = _ref2.rotatable,
+        rotatable = _ref2$rotatable === undefined ? true : _ref2$rotatable,
+        _ref2$moveable = _ref2.moveable,
+        moveable = _ref2$moveable === undefined ? true : _ref2$moveable,
+        _ref2$wideable = _ref2.wideable,
+        wideable = _ref2$wideable === undefined ? true : _ref2$wideable,
+        _ref2$lengthable = _ref2.lengthable,
+        lengthable = _ref2$lengthable === undefined ? true : _ref2$lengthable,
+        options = objectWithoutProperties(_ref2, ['center', 'width', 'length', 'bearing', 'rhumb', 'rotatable', 'moveable', 'wideable', 'lengthable']);
+    return new L.Box(_extends({ center: center, width: width, rhumb: rhumb, length: length, bearing: bearing, rotatable: rotatable, moveable: moveable, wideable: wideable, lengthable: lengthable }, options));
+};
+
+L.rect = function (_ref3) {
+    var options = objectWithoutProperties(_ref3, []);
+    return new L.Box(_extends({}, options, { bearing: 0, rotatable: false }));
 };
