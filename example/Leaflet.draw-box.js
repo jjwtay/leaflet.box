@@ -131,6 +131,14 @@ L.Draw.Rect = L.Draw.Box.extend({
     statics: {
         TYPE: 'rect'
     },
+    initialize: function initialize(map, options) {
+        // Save the type so super can fire, need to do this as cannot do this.TYPE :(
+        this.type = L.Draw.Rect.TYPE;
+
+        this._initialLabelText = L.drawLocal.draw.handlers.box.tooltip.start;
+
+        L.Draw.SimpleShape.prototype.initialize.call(this, map, options);
+    },
     _fireCreatedEvent: function _fireCreatedEvent() {
         var box = L.rect(_extends({}, this.options.shapeOptions, {
             center: this._startLatLng,
