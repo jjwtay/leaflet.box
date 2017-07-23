@@ -100,6 +100,7 @@
         }).addTo(map)*/
 
         map.on('draw:created', e => {
+            console.log(e)
             
             switch (e.layerType) {
             case 'box':
@@ -197,7 +198,7 @@
             width: 500,
             length: 500,
             bearing: -45,
-            color: 'pink',
+            color: 'hotpink',
             moveable: false
         }).on('dblclick', e => toggle(e, box0))
 
@@ -266,6 +267,7 @@
         map.addLayer(box1)
         map.addLayer(box2)
         map.addLayer(box3)
+        map.addLayer(box4)
 	</script>
 </body>
 
