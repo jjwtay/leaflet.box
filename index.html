@@ -194,21 +194,21 @@
         }).on('dblclick', e => toggle(e, box1))
 
         let box2 = L.box({
-            center: [-37.7772, 175.2726],
+            center: [-37.7772, 175.2656],
             width: 1000,
             length: 500,
             bearing: 45,
             color: 'red',
             rotatable: false        
-        })
+        }).on('dblclick', e => toggle(e, box1))
 
         let box3 = L.rect({
-            center: [-37.7772, 175.2786],
+            center: [-37.7772, 175.2856],
             width: 1000,
             length: 500,
             bearing: 45,
             color: 'green'    
-        })
+        }).on('dblclick', e => toggle(e, box1))
 
         /*let box4 = L.rect({
             center: [-37.7772, 175.2756],
