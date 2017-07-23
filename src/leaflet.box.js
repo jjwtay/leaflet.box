@@ -5,7 +5,7 @@ L.Box = L.Polygon.extend({
         fillOpacity: 0.2
     },
 
-    initialize: function ({
+    initialize ({
         center = [0, 0],
         width = 100,
         length = 1000,
@@ -23,46 +23,46 @@ L.Box = L.Polygon.extend({
         this._setLatLngs(this.getLatLngs())
     },
 
-    getCenter: function() { return this._center },
+    getCenter () { return this._center },
 
-    setCenter: function(center) {
+    setCenter (center) {
         this._center = L.latLng(center)
         return this.redraw()
     },
 
-    getWidth: function() { return this._width },
+    getWidth () { return this._width },
 
-    setWidth: function (width = 100) {
+    setWidth (width = 100) {
         this._width = Math.abs(width)
         return this.redraw()
     },
 
-    getLength: function() { return this._length },
+    getLength () { return this._length },
 
-    setLength: function (length = 100) {
+    setLength (length = 100) {
         this._length = Math.abs(length)
         return this.redraw()
     },
 
-    getBearing: function() { return this._bearing },
+    getBearing () { return this._bearing },
 
-    setBearing: function (bearing = 0) {
+    setBearing (bearing = 0) {
         this._bearing = bearing % 360
         return this.redraw()
     },
 
-    getOptions: function () { return this.options },
+    getOptions () { return this.options },
 
-    setOptions: function (options = {}) {
+    setOptions (options = {}) {
         L.setOptions(this, options)
         return this.redraw()
     },
 
-    getLatLngs() {
-        let latLngs = []
+    getLatLngs () {
+        const latLngs = []
 
-        let hypotenuse = Math.sqrt(Math.pow(this.getWidth()/2 , 2) + Math.pow(this.getLength()/2 , 2))
-        
+        const hypotenuse = Math.sqrt(Math.pow(this.getWidth()/2 , 2) + Math.pow(this.getLength()/2 , 2))
+
         latLngs.push(this.computeDestinationPoint(
             this.getCenter(),
             hypotenuse,
@@ -87,14 +87,14 @@ L.Box = L.Polygon.extend({
         return [latLngs]
     },
 
-    setLatLngs: function(latLngs = this.getLatLngs()) {
+    setLatLngs (latLngs = this.getLatLngs()) {
         this._setLatLngs(latLngs)
         return this.redraw()
     },
 
-    getMaxMin(values) {
+    getMaxMin (values) {
         return values.reduce((acc, val) => {
-            let newAcc = {...acc}
+            const newAcc = {...acc}
             if (val < newAcc.min) newAcc.min = val
             if (val > newAcc.max) newAcc.max = val
             return newAcc
@@ -103,14 +103,14 @@ L.Box = L.Polygon.extend({
 
     setStyle: L.Path.prototype.setStyle,
 
-    getRhumb: function () { return this._rhumb },
+    getRhumb () { return this._rhumb },
 
-    setRhumb: function (rhumb = 45) {
+    setRhumb (rhumb = 45) {
         this._rhumb = rhumb
         return this.redraw()
     },
 
-    computeDestinationPoint: function (
+    computeDestinationPoint (
         start = {lat: 0, lng: 0},
         distance = 1,
         bearing = 0,
@@ -120,22 +120,22 @@ L.Box = L.Polygon.extend({
         if (rhumb) {
             /*http://www.movable-type.co.uk/scripts/latlong.html*/
 
-            var δ = Number(distance) / radius // angular distance in radians
-            var φ1 = start.lat * Math.PI / 180
-            var λ1 = start.lng * Math.PI / 180
-            var θ = bearing * Math.PI / 180
+            const δ = Number(distance) / radius // angular distance in radians
+            const φ1 = start.lat * Math.PI / 180
+            const λ1 = start.lng * Math.PI / 180
+            const θ = bearing * Math.PI / 180
 
-            var Δφ = δ * Math.cos(θ)
-            var φ2 = φ1 + Δφ
+            const Δφ = δ * Math.cos(θ)
+            let φ2 = φ1 + Δφ
 
             // check for some daft bugger going past the pole, normalise latitude if so
             if (Math.abs(φ2) > Math.PI/2) φ2 = φ2>0 ? Math.PI-φ2 : -Math.PI-φ2
 
-            var Δψ = Math.log(Math.tan(φ2/2+Math.PI/4)/Math.tan(φ1/2+Math.PI/4))
-            var q = Math.abs(Δψ) > 10e-12 ? Δφ / Δψ : Math.cos(φ1) // E-W course becomes ill-conditioned with 0/0
+            const Δψ = Math.log(Math.tan(φ2/2+Math.PI/4)/Math.tan(φ1/2+Math.PI/4))
+            const q = Math.abs(Δψ) > 10e-12 ? Δφ / Δψ : Math.cos(φ1) // E-W course becomes ill-conditioned with 0/0
 
-            var Δλ = δ*Math.sin(θ)/q
-            var λ2 = λ1 + Δλ
+            const Δλ = δ*Math.sin(θ)/q
+            const λ2 = λ1 + Δλ
 
             //return new LatLon(φ2.toDegrees(), (λ2.toDegrees()+540) % 360 - 180); // normalise to −180..+180°
             return {
@@ -143,17 +143,17 @@ L.Box = L.Polygon.extend({
                 lng: ((λ2 * 180 / Math.PI) + 540) % 360 - 180
             }
         }
-        let bng = bearing * Math.PI / 180
+        const bng = bearing * Math.PI / 180
 
-        var lat1 = start.lat * Math.PI / 180
-        var lon1 = start.lng * Math.PI / 180
+        const lat1 = start.lat * Math.PI / 180
+        const lon1 = start.lng * Math.PI / 180
 
-        var lat2 = Math.asin( Math.sin(lat1)*Math.cos(distance/radius) +
+        let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distance/radius) +
             Math.cos(lat1)*Math.sin(distance/radius)*Math.cos(bng))
 
-        var lon2 = lon1 + Math.atan2(Math.sin(bng)*Math.sin(distance/radius)*Math.cos(lat1),
+        let lon2 = lon1 + Math.atan2(Math.sin(bng)*Math.sin(distance/radius)*Math.cos(lat1),
             Math.cos(distance/radius)-Math.sin(lat1)*Math.sin(lat2))
-                    
+
         lat2 = lat2 * 180 / Math.PI
         lon2 = lon2 * 180 / Math.PI
 
@@ -164,7 +164,7 @@ L.Box = L.Polygon.extend({
 
     },
 
-    _update: function () {
+    _update () {
         if (!this._map) { return }
 
         this._clipPoints()
@@ -172,7 +172,7 @@ L.Box = L.Polygon.extend({
         this._updatePath()
     },
 
-    _updatePath: function () {
+    _updatePath () {
         this._renderer._updatePoly(this, true)
     },
 })
