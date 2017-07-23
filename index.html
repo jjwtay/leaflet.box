@@ -55,8 +55,18 @@
             }
             new L.Draw.Box(map, options).enable()
         }).addTo(map)
+
+        L.easyButton('<span>rect</span>', function() {
+            let options = {
+                shapeOptions: {
+                    color: 'pink',
+                    width: 2,
+                    fill: false
+                }
+            }
+        })
     
-        L.easyButton( '<span>arc</span>', function(){
+        /*L.easyButton( '<span>arc</span>', function(){
             let options = {
                 shapeOptions: {
                     width: 2,
@@ -79,13 +89,17 @@
                 }
             }
             new L.Draw.Sector(map, options).enable()
-        }).addTo(map)
+        }).addTo(map)*/
 
         map.on('draw:created', e => {
             
             switch (e.layerType) {
             case 'box':
                 addBox(e)
+                break
+            case 'rect':
+                console.log('rect')
+                addRect(e)
                 break
             case 'arc':
                 addArc(e)
@@ -113,6 +127,19 @@
             newBox.editing.enable()
 
             map.addLayer(newBox)
+        }
+
+        function addRect(e) {
+            let newRect = L.rect({
+                center: e.layer.getCenter(),
+                width: e.layer.getWidth(),
+                length: e.layer.getLength(),
+                color: 'rgb(0, 255, 255)'
+            })
+
+            newRect.editing.enable()
+
+            map.addLayer(newRect)
         }
 
         function addSector(e) {
@@ -166,7 +193,32 @@
             color: 'blue'
         }).on('dblclick', e => toggle(e, box1))
 
-        let arc1 = L.arc({
+        let box2 = L.box({
+            center: [-37.7872, 175.2856],
+            width: 1000,
+            length: 500,
+            bearing: 45,
+            color: 'red',
+            rotatable: false        
+        })
+
+        let box3 = L.rect({
+            center: [-37.7672, 175.2656],
+            width: 1000,
+            length: 500,
+            bearing: 45,
+            color: 'blue'    
+        })
+
+        /*let box4 = L.rect({
+            center: [-37.7772, 175.2756],
+            width: 1000,
+            length: 500,
+            bearing: 45,
+            color: 'blue'
+        })*/
+
+        /*let arc1 = L.arc({
             center: [-37.7772, 175.2756],
             radius: 1000,
             color: 'red',
@@ -184,7 +236,7 @@
         }).on('dblclick', e => toggle(e, sector1))
 
         map.addLayer(sector1)
-        map.addLayer(arc1)
+        map.addLayer(arc1)*/
         map.addLayer(box1)
 	</script>
 </body>
