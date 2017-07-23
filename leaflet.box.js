@@ -60,60 +60,49 @@ L.Box = L.Polygon.extend({
 
         this._setLatLngs(this.getLatLngs());
     },
-
     getCenter: function getCenter() {
         return this._center;
     },
-
     setCenter: function setCenter(center) {
         this._center = L.latLng(center);
         return this.redraw();
     },
-
     getWidth: function getWidth() {
         return this._width;
     },
-
     setWidth: function setWidth() {
         var width = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
 
         this._width = Math.abs(width);
         return this.redraw();
     },
-
     getLength: function getLength() {
         return this._length;
     },
-
     setLength: function setLength() {
         var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
 
         this._length = Math.abs(length);
         return this.redraw();
     },
-
     getBearing: function getBearing() {
         return this._bearing;
     },
-
     setBearing: function setBearing() {
         var bearing = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
         this._bearing = bearing % 360;
         return this.redraw();
     },
-
     getOptions: function getOptions() {
         return this.options;
     },
-
     setOptions: function setOptions() {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         L.setOptions(this, options);
         return this.redraw();
     },
-
     getLatLngs: function getLatLngs() {
         var latLngs = [];
 
@@ -126,13 +115,12 @@ L.Box = L.Polygon.extend({
 
         return [latLngs];
     },
+    setLatLngs: function setLatLngs() {
+        var latLngs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.getLatLngs();
 
-
-    setLatLngs: function setLatLngs(latLngs) {
-        this._setLatLngs(this.getLatLngs());
+        this._setLatLngs(latLngs);
         return this.redraw();
     },
-
     getMaxMin: function getMaxMin(values) {
         return values.reduce(function (acc, val) {
             var newAcc = _extends({}, acc);
@@ -148,14 +136,12 @@ L.Box = L.Polygon.extend({
     getRhumb: function getRhumb() {
         return this._rhumb;
     },
-
     setRhumb: function setRhumb() {
         var rhumb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 45;
 
         this._rhumb = rhumb;
         return this.redraw();
     },
-
     computeDestinationPoint: function computeDestinationPoint() {
         var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { lat: 0, lng: 0 };
         var distance = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
@@ -164,19 +150,14 @@ L.Box = L.Polygon.extend({
         var rhumb = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.getRhumb();
 
         if (rhumb) {
-            var d = distance,
-                _ = bearing * Math.PI / 180,
-                φ = start.lat * Math.PI / 180,
-                λ = start.lng * Math.PI / 180,
-                R = radius;
             /*http://www.movable-type.co.uk/scripts/latlong.html*/
 
             var δ = Number(distance) / radius; // angular distance in radians
             var φ1 = start.lat * Math.PI / 180;
             var λ1 = start.lng * Math.PI / 180;
-            var _ = bearing * Math.PI / 180;
+            var θ = bearing * Math.PI / 180;
 
-            var Δφ = δ * Math.cos(_);
+            var Δφ = δ * Math.cos(θ);
             var φ2 = φ1 + Δφ;
 
             // check for some daft bugger going past the pole, normalise latitude if so
@@ -185,7 +166,7 @@ L.Box = L.Polygon.extend({
             var Δψ = Math.log(Math.tan(φ2 / 2 + Math.PI / 4) / Math.tan(φ1 / 2 + Math.PI / 4));
             var q = Math.abs(Δψ) > 10e-12 ? Δφ / Δψ : Math.cos(φ1); // E-W course becomes ill-conditioned with 0/0
 
-            var Δλ = δ * Math.sin(_) / q;
+            var Δλ = δ * Math.sin(θ) / q;
             var λ2 = λ1 + Δλ;
 
             //return new LatLon(φ2.toDegrees(), (λ2.toDegrees()+540) % 360 - 180); // normalise to −180..+180°
@@ -211,7 +192,6 @@ L.Box = L.Polygon.extend({
             lng: lon2
         };
     },
-
     _update: function _update() {
         if (!this._map) {
             return;
@@ -221,7 +201,6 @@ L.Box = L.Polygon.extend({
         this._simplifyPoints();
         this._updatePath();
     },
-
     _updatePath: function _updatePath() {
         this._renderer._updatePoly(this, true);
     }
